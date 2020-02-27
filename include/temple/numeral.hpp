@@ -123,28 +123,21 @@ namespace detail {
     template <template <template <class> class, class> class m,
         template <template <class> class, class> class n>
     struct _mul<nbox<m>, nbox<n>> {
-        template <template <class> class f, class x>
-        struct _result {
-            template <class y>
-            using mf = m<f, y>;
+        template <class accum>
+        using iter = add<nbox<n>, accum>;
 
-            using type = n<mf, x>;
-        };
-
-        template <template <class> class f, class x>
-        using result = typename _result<f, x>::type;
-
-        using type = nbox<result>;
+        using type = m<iter, church<0>>;
     };
 
     template <class n, class p>
     struct _pow {
     };
 
-    template <class n, template <template <class> class, class> class p>
-    struct _pow<n, nbox<p>> {
-        template <class cn>
-        using iter = mul<n, cn>;
+    template <template <template <class> class, class> class n,
+        template <template <class> class, class> class p>
+    struct _pow<nbox<n>, nbox<p>> {
+        template <class accum>
+        using iter = mul<nbox<n>, accum>;
 
         using type = p<iter, church<1>>;
     };
