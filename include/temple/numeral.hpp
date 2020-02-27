@@ -28,6 +28,9 @@ namespace detail {
 
     template <class n, class p>
     struct _pow;
+
+    template <class n>
+    struct _dec;
 }
 
 template <class n, class f, class x>
@@ -47,6 +50,9 @@ using mul = typename detail::_mul<m, n>::type;
 
 template <class n, class p>
 using pow = typename detail::_pow<n, p>::type;
+
+template <class n>
+using dec = typename detail::_dec<n>::type;
 
 /*
 template <template <template <class> class, class> class n,
@@ -75,7 +81,7 @@ namespace detail {
 
     template <template <template <class> class, class> class n, template <class> class f, class x>
     struct _churchify<nbox<n>, fbox<f>, x> {
-        using type = typename n<f, x>::type;
+        using type = n<f, x>;
     };
 
     template <class n>

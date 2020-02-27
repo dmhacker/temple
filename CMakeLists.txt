@@ -8,9 +8,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_compile_options("-ftemplate-depth=16834")
 
 file(GLOB sources 
-    "src/*.cpp"
+    "tests/*.cpp"
 )
 
-add_executable(empty "src/main.cpp" ${sources})
+add_executable(empty "tests/main.cpp" ${sources})
 target_include_directories(empty PRIVATE "lib")
 target_include_directories(empty PRIVATE "include")
