@@ -1,6 +1,7 @@
 #include <catch.hpp>
 #include <metal.hpp>
-#include <temple/numerals.hpp>
+#include <temple.hpp>
+#include <vector>
 
 template <class n>
 using ITER = metal::add<n, metal::number<2>>;
@@ -19,6 +20,9 @@ using is_even = n<metal::not_, metal::true_>;
 template <template <template <class> class, class> class n>
 using is_odd = n<metal::not_, metal::false_>;
 
+template <class t>
+using vectorize = std::vector<t>;
+
 TEST_CASE("Test cases for Church numerals")
 {
     // Test church numerals from 0 to 10
@@ -36,6 +40,12 @@ TEST_CASE("Test cases for Church numerals")
     // Test arbitrary church numerals (n specified as integer literal)
     REQUIRE(church99<ITER, BASE>() == 198);
     REQUIRE(church100<ITER, BASE>() == 200);
+
+    // Try using a common type like std::vector
+    REQUIRE(metal::same<temple::church0<vectorize, char>, char>());
+    REQUIRE(metal::same<temple::church1<vectorize, char>, std::vector<char>>());
+    REQUIRE(metal::same<temple::church5<vectorize, char>, 
+            std::vector<std::vector<std::vector<std::vector<std::vector<char>>>>>>());
 
     // Test parity of numerals
     REQUIRE(is_odd<temple::church1>());
