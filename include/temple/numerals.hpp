@@ -35,6 +35,11 @@ namespace detail {
         template <template <class> class, class> class m,
         template <class> class f, class x>
     struct _sub;
+
+    template <template <template <class> class, class> class n,
+        template <template <class> class, class> class p,
+        template <class> class f, class x>
+    struct _pow;
 }
 
 template <int_ k, template <class> class f, class x>
@@ -66,6 +71,11 @@ template <template <template <class> class, class> class n,
     template <template <class> class, class> class m,
     template <class> class f, class x>
 using sub = typename detail::_sub<n, m, f, x>::type;
+
+template <template <template <class> class, class> class n,
+    template <template <class> class, class> class p,
+    template <class> class f, class x>
+using pow = typename detail::_pow<n, p, f, x>::type;
 
 template <template <class> class f, class x>
 using church0 = church<0, f, x>;
@@ -170,9 +180,15 @@ namespace detail {
         template <class l>
         using iter = typename _iter<l>::type;
 
-        using base = m<build, pair<church0<f, x>, marker>>;
-        using type = tail<n<iter, base>>;
+        using type = tail<n<iter, m<build, pair<church0<f, x>, marker>>>>;
     };
+
+    template <template <template <class> class, class> class n,
+        template <template <class> class, class> class p,
+        template <class> class f, class x>
+    struct _pow {
+    };
+
 }
 
 }
