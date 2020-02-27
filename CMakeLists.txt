@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_compile_options("-ftemplate-depth=10000000")
+add_compile_options("-ftemplate-depth=16834")
 
 file(GLOB sources 
     "src/*.cpp"
