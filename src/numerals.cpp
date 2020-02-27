@@ -25,14 +25,21 @@ TEST_CASE("Test cases")
     REQUIRE(temple::church6<ftst, xtst>() == 6);
     REQUIRE(temple::church7<ftst, xtst>() == 7);
     REQUIRE(temple::church8<ftst, xtst>() == 8);
+    REQUIRE(temple::church9<ftst, xtst>() == 9);
 
     // Test arbitrary church numerals (n specified as integer literal)
     REQUIRE(church99<metal::inc, metal::number<0>>() == 99);
     REQUIRE(church100<metal::inc, metal::number<0>>() == 100);
 
     // Test increment operation
+    REQUIRE(metal::same<temple::inc<temple::church0, ftst, xtst>,
+        temple::church1<ftst, xtst>>());
+    REQUIRE(metal::same<temple::inc<temple::church1, ftst, xtst>,
+        temple::church2<ftst, xtst>>());
     REQUIRE(metal::same<temple::inc<temple::church4, ftst, xtst>,
         temple::church5<ftst, xtst>>());
+    REQUIRE(metal::same<temple::inc<church99, ftst, xtst>,
+        church100<ftst, xtst>>());
 
     // Test decrement operation
     REQUIRE(metal::same<temple::dec<temple::church0, ftst, xtst>,
@@ -49,6 +56,12 @@ TEST_CASE("Test cases")
         temple::church7<ftst, xtst>>());
     REQUIRE(metal::same<temple::add<temple::church3, temple::church4, ftst, xtst>,
         temple::add<temple::church4, temple::church3, ftst, xtst>>());
+    REQUIRE(metal::same<temple::add<temple::church0, temple::church0, ftst, xtst>,
+        temple::church0<ftst, xtst>>());
+    REQUIRE(metal::same<temple::add<temple::church4, temple::church4, ftst, xtst>,
+        temple::church8<ftst, xtst>>());
+    REQUIRE(metal::same<temple::add<temple::church3, temple::church6, ftst, xtst>,
+        temple::church9<ftst, xtst>>());
 
     // Test multiplication operation
     REQUIRE(metal::same<temple::mul<temple::church2, temple::church4, ftst, xtst>,

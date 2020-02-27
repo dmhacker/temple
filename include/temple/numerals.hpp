@@ -40,19 +40,31 @@ namespace detail {
 template <int_ k, template <class> class f, class x>
 using church = typename detail::_church<k, f, x>::type;
 
-template <template <template <class> class, class> class n, template <class> class f, class x>
+template <template <template <class> class, class> class n,
+    template <class> class f, class x>
 using inc = typename detail::_inc<n, f, x>::type;
 
-template <template <template <class> class, class> class n, template <class> class f, class x>
+template <template <template <class> class, class> class n,
+    template <class> class f, class x>
 using dec = typename detail::_dec<n, f, x>::type;
 
-template <template <template <class> class, class> class n, template <template <class> class, class> class m, template <class> class f, class x>
+template <template <template <class> class, class> class n,
+    template <template <class> class, class> class m,
+    template <class> class f, class x>
 using add = typename detail::_add<n, m, f, x>::type;
 
-template <template <template <class> class, class> class n, template <template <class> class, class> class m, template <class> class f, class x>
+template <template <template <class> class, class> class n,
+    template <template <class> class, class> class m,
+    template <class> class f, class x>
 using mul = typename detail::_mul<n, m, f, x>::type;
 
-template <template <template <class> class, class> class n, template <template <class> class, class> class m, template <class> class f, class x>
+template <template <template <class> class, class> class n,
+    template <class> class f, class x>
+using sqr = mul<n, n, f, x>;
+
+template <template <template <class> class, class> class n,
+    template <template <class> class, class> class m,
+    template <class> class f, class x>
 using sub = typename detail::_sub<n, m, f, x>::type;
 
 template <template <class> class f, class x>
@@ -65,10 +77,10 @@ template <template <class> class f, class x>
 using church2 = inc<church1, f, x>;
 
 template <template <class> class f, class x>
-using church3 = inc<church2, f, x>;
+using church3 = add<church1, church2, f, x>;
 
 template <template <class> class f, class x>
-using church4 = add<church2, church2, f, x>;
+using church4 = sqr<church2, f, x>;
 
 template <template <class> class f, class x>
 using church5 = add<church3, church2, f, x>;
@@ -81,6 +93,9 @@ using church7 = inc<church6, f, x>;
 
 template <template <class> class f, class x>
 using church8 = mul<church4, church2, f, x>;
+
+template <template <class> class f, class x>
+using church9 = sqr<church3, f, x>;
 
 namespace detail {
     template <int_ k, template <class> class f, class x>
@@ -140,32 +155,6 @@ namespace detail {
         template <class> class f, class x>
     struct _sub {
         template <class l>
-        struct _pop_tail {
-            using type = pair<first<l>, typename _pop_tail<second<l>>::type>;
-        };
-
-        template <class data>
-        struct _pop_tail<pair<data, char>> {
-            using type = char;
-        };
-
-        template <class l>
-        using pop_tail = typename _pop_tail<l>::type;
-
-        template <class l>
-        struct _tail {
-            using type = typename _tail<second<l>>::type;
-        };
-
-        template <class data>
-        struct _tail<pair<data, char>> {
-            using type = data;
-        };
-
-        template <class l>
-        using tail = typename _tail<l>::type;
-
-        template <class l>
         struct _build {
             using type = pair<church0<f, x>, l>;
         };
@@ -181,7 +170,7 @@ namespace detail {
         template <class l>
         using iter = typename _iter<l>::type;
 
-        using base = m<build, pair<church0<f, x>, char>>;
+        using base = m<build, pair<church0<f, x>, marker>>;
         using type = tail<n<iter, base>>;
     };
 }
