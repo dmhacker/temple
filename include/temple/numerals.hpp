@@ -13,6 +13,12 @@ namespace detail {
     template <int_ k, template <class> class f, class x>
     struct _church;
 
+    template <template <template <class> class, class> class n>
+    struct _box;
+
+    template <class bx, template <class> class f, class x>
+    struct _unbox;
+
     template <template <template <class> class, class> class n,
         template <class> class f, class x>
     struct _inc;
@@ -77,6 +83,12 @@ template <template <template <class> class, class> class n,
     template <class> class f, class x>
 using pow = typename detail::_pow<n, p, f, x>::type;
 
+template <template <template <class> class, class> class n>
+using box = detail::_box<n>;
+
+template <class bx, template <class> class f, class x>
+using unbox = typename detail::_unbox<bx, f, x>::type;
+
 template <template <class> class f, class x>
 using church0 = church<0, f, x>;
 
@@ -116,6 +128,19 @@ namespace detail {
     template <template <class> class f, class x>
     struct _church<0, f, x> {
         using type = x;
+    };
+
+    template <template <template <class> class, class> class n>
+    struct _box {
+    };
+
+    template <class bx, template <class> class f, class x>
+    struct _unbox {
+    };
+
+    template <template <template <class> class, class> class n, template <class> class f, class x>
+    struct _unbox<box<n>, f, x> {
+        using type = n<f, x>;
     };
 
     template <template <template <class> class, class> class n,
@@ -187,11 +212,7 @@ namespace detail {
         template <template <class> class, class> class p,
         template <class> class f, class x>
     struct _pow {
-        template <template <template <class> class, class> class cn>
-        struct box {
-        };
-
-        template <class b>
+        template <class bx>
         struct _iter {
         };
 
@@ -206,21 +227,8 @@ namespace detail {
         template <class b>
         using iter = typename _iter<b>::type;
 
-        template <class b>
-        struct _unbox {
-        };
-
-        template <template <template <class> class, class> class cn>
-        struct _unbox<box<cn>> {
-            using type = cn<f, x>;
-        };
-
-        template <class b>
-        using unbox = typename _unbox<b>::type;
-
-        using type = unbox<p<iter, box<church1>>>;
+        using type = unbox<p<iter, box<church1>>, f, x>;
     };
-
 }
 
 }
