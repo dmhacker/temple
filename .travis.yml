@@ -16,5 +16,4 @@ compiler:
   - clang-9
 script:
   - cmake -DCMAKE_BUILD_TYPE=Debug .
-  - make tests -j4
-  - ./tests
+  - make -j4

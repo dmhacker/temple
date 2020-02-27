@@ -1,8 +1,9 @@
-#ifndef TEMPLE_NUMERALS_HPP
-#define TEMPLE_NUMERALS_HPP
+#ifndef TEMPLE_NUMERAL_HPP
+#define TEMPLE_NUMERAL_HPP
 
 #include <cstdint>
 
+#include "box.hpp"
 #include "pair.hpp"
 
 namespace temple {
@@ -10,64 +11,47 @@ namespace temple {
 using int_ = uint32_t;
 
 namespace detail {
-    template <int_ k, template <class> class f, class x>
-    struct _church;
+    template <class n, class f, class x>
+    struct _churchify;
 
-    template <template <template <class> class, class> class n>
-    struct _box;
-
-    template <class bx, template <class> class f, class x>
-    struct _unbox;
-
-    template <template <template <class> class, class> class n,
-        template <class> class f, class x>
+    template <class n>
     struct _inc;
 
-    template <template <template <class> class, class> class n,
-        template <class> class f, class x>
-    struct _dec;
+    template <int_ k>
+    struct _church;
 
-    template <template <template <class> class, class> class n,
-        template <template <class> class, class> class m,
-        template <class> class f, class x>
+    template <class m, class n>
     struct _add;
 
-    template <template <template <class> class, class> class n,
-        template <template <class> class, class> class m,
-        template <class> class f, class x>
+    template <class m, class n>
     struct _mul;
 
-    template <template <template <class> class, class> class n,
-        template <template <class> class, class> class m,
-        template <class> class f, class x>
-    struct _sub;
-
-    template <template <template <class> class, class> class n,
-        template <template <class> class, class> class p,
-        template <class> class f, class x>
+    template <class n, class p>
     struct _pow;
 }
 
-template <int_ k, template <class> class f, class x>
-using church = typename detail::_church<k, f, x>::type;
+template <class n, class f, class x>
+using churchify = typename detail::_churchify<n, f, x>::type;
 
-template <template <template <class> class, class> class n,
-    template <class> class f, class x>
-using inc = typename detail::_inc<n, f, x>::type;
+template <class n>
+using inc = typename detail::_inc<n>::type;
 
+template <int_ k>
+using church = typename detail::_church<k>::type;
+
+template <class m, class n>
+using add = typename detail::_add<m, n>::type;
+
+template <class m, class n>
+using mul = typename detail::_mul<m, n>::type;
+
+template <class n, class p>
+using pow = typename detail::_pow<n, p>::type;
+
+/*
 template <template <template <class> class, class> class n,
     template <class> class f, class x>
 using dec = typename detail::_dec<n, f, x>::type;
-
-template <template <template <class> class, class> class n,
-    template <template <class> class, class> class m,
-    template <class> class f, class x>
-using add = typename detail::_add<n, m, f, x>::type;
-
-template <template <template <class> class, class> class n,
-    template <template <class> class, class> class m,
-    template <class> class f, class x>
-using mul = typename detail::_mul<n, m, f, x>::type;
 
 template <template <template <class> class, class> class n,
     template <class> class f, class x>
@@ -82,73 +66,90 @@ template <template <template <class> class, class> class n,
     template <template <class> class, class> class p,
     template <class> class f, class x>
 using pow = typename detail::_pow<n, p, f, x>::type;
-
-template <template <template <class> class, class> class n>
-using box = detail::_box<n>;
-
-template <class bx, template <class> class f, class x>
-using unbox = typename detail::_unbox<bx, f, x>::type;
-
-template <template <class> class f, class x>
-using church0 = church<0, f, x>;
-
-template <template <class> class f, class x>
-using church1 = church<1, f, x>;
-
-template <template <class> class f, class x>
-using church2 = inc<church1, f, x>;
-
-template <template <class> class f, class x>
-using church3 = add<church1, church2, f, x>;
-
-template <template <class> class f, class x>
-using church4 = sqr<church2, f, x>;
-
-template <template <class> class f, class x>
-using church5 = add<church3, church2, f, x>;
-
-template <template <class> class f, class x>
-using church6 = mul<church3, church2, f, x>;
-
-template <template <class> class f, class x>
-using church7 = inc<church6, f, x>;
-
-template <template <class> class f, class x>
-using church8 = pow<church2, church3, f, x>;
-
-template <template <class> class f, class x>
-using church9 = sqr<church3, f, x>;
+*/
 
 namespace detail {
-    template <int_ k, template <class> class f, class x>
-    struct _church {
-        using type = f<church<k - 1, f, x>>;
-    };
-
-    template <template <class> class f, class x>
-    struct _church<0, f, x> {
-        using type = x;
-    };
-
-    template <template <template <class> class, class> class n>
-    struct _box {
-    };
-
-    template <class bx, template <class> class f, class x>
-    struct _unbox {
+    template <class n, class f, class x>
+    struct _churchify {
     };
 
     template <template <template <class> class, class> class n, template <class> class f, class x>
-    struct _unbox<box<n>, f, x> {
-        using type = n<f, x>;
+    struct _churchify<nbox<n>, fbox<f>, x> {
+        using type = typename n<f, x>::type;
     };
 
-    template <template <template <class> class, class> class n,
-        template <class> class f, class x>
+    template <class n>
     struct _inc {
-        using type = f<n<f, x>>;
     };
 
+    template <template <template <class> class, class> class n>
+    struct _inc<nbox<n>> {
+        template <template <class> class f, class x>
+        using result = f<n<f, x>>;
+
+        using type = nbox<result>;
+    };
+
+    template <int_ k>
+    struct _church {
+        using type = inc<church<k - 1>>;
+    };
+
+    template <>
+    struct _church<0> {
+        template <template <class> class f, class x>
+        using church0 = x;
+
+        using type = nbox<church0>;
+    };
+
+    template <class m, class n>
+    struct _add {
+    };
+
+    template <template <template <class> class, class> class m,
+        template <template <class> class, class> class n>
+    struct _add<nbox<m>, nbox<n>> {
+        template <template <class> class f, class x>
+        using result = m<f, n<f, x>>;
+
+        using type = nbox<result>;
+    };
+
+    template <class m, class n>
+    struct _mul {
+    };
+
+    template <template <template <class> class, class> class m,
+        template <template <class> class, class> class n>
+    struct _mul<nbox<m>, nbox<n>> {
+        template <template <class> class f, class x>
+        struct _result {
+            template <class y>
+            using mf = m<f, y>;
+
+            using type = n<mf, x>;
+        };
+
+        template <template <class> class f, class x>
+        using result = typename _result<f, x>::type;
+
+        using type = nbox<result>;
+    };
+
+    template <class n, class p>
+    struct _pow {
+    };
+
+    template <class n, template <template <class> class, class> class p>
+    struct _pow<n, nbox<p>> {
+        template <class cn>
+        using iter = mul<n, cn>;
+
+        using type = p<iter, church<1>>;
+    };
+
+    /*
     template <template <template <class> class, class> class n,
         template <class> class f, class x>
     struct _dec {
@@ -161,28 +162,6 @@ namespace detail {
         using iter = typename _iter<y>::type;
 
         using type = first<n<iter, pair<church0<f, x>, church0<f, x>>>>;
-    };
-
-    template <template <template <class> class, class> class n,
-        template <template <class> class, class> class m,
-        template <class> class f, class x>
-    struct _add {
-        using type = m<f, n<f, x>>;
-    };
-
-    template <template <template <class> class, class> class n,
-        template <template <class> class, class> class m,
-        template <class> class f, class x>
-    struct _mul {
-        template <class y>
-        struct _mfold {
-            using type = m<f, y>;
-        };
-
-        template <class y>
-        using mfold = typename _mfold<y>::type;
-
-        using type = n<mfold, x>;
     };
 
     template <template <template <class> class, class> class n,
@@ -229,6 +208,7 @@ namespace detail {
 
         using type = unbox<p<iter, box<church1>>, f, x>;
     };
+    */
 }
 
 }
