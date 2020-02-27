@@ -102,7 +102,7 @@ template <template <class> class f, class x>
 using church7 = inc<church6, f, x>;
 
 template <template <class> class f, class x>
-using church8 = mul<church4, church2, f, x>;
+using church8 = pow<church2, church3, f, x>;
 
 template <template <class> class f, class x>
 using church9 = sqr<church3, f, x>;
@@ -187,6 +187,38 @@ namespace detail {
         template <template <class> class, class> class p,
         template <class> class f, class x>
     struct _pow {
+        template <template <template <class> class, class> class cn>
+        struct box {
+        };
+
+        template <class b>
+        struct _iter {
+        };
+
+        template <template <template <class> class, class> class cn>
+        struct _iter<box<cn>> {
+            template <template <class> class g, class y>
+            using nn = mul<n, cn, g, y>;
+
+            using type = box<nn>;
+        };
+
+        template <class b>
+        using iter = typename _iter<b>::type;
+
+        template <class b>
+        struct _unbox {
+        };
+
+        template <template <template <class> class, class> class cn>
+        struct _unbox<box<cn>> {
+            using type = cn<f, x>;
+        };
+
+        template <class b>
+        using unbox = typename _unbox<b>::type;
+
+        using type = unbox<p<iter, box<church1>>>;
     };
 
 }

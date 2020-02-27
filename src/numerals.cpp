@@ -110,4 +110,24 @@ TEST_CASE("Test cases for Church numerals")
         temple::church5<ITER, BASE>>());
     REQUIRE(metal::same<temple::sub<temple::church4, temple::church1, ITER, BASE>,
         temple::dec<temple::church4, ITER, BASE>>());
+
+    // Test exponentation operation
+    REQUIRE(metal::same<temple::pow<temple::church1, temple::church0, ITER, BASE>,
+        temple::church1<ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<church100, temple::church0, ITER, BASE>,
+        temple::church1<ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<temple::church1, temple::church1, ITER, BASE>,
+        temple::church1<ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<church100, temple::church1, ITER, BASE>,
+        church100<ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<temple::church3, temple::church2, ITER, BASE>,
+        temple::church9<ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<temple::church2, temple::church3, ITER, BASE>,
+        temple::church8<ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<temple::church1, church100, ITER, BASE>,
+        temple::church1<ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<temple::church2, temple::church2, ITER, BASE>,
+        temple::church4<ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<church100, temple::church2, ITER, BASE>,
+        temple::sqr<church100, ITER, BASE>>());
 }
