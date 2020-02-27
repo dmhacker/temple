@@ -128,6 +128,6 @@ TEST_CASE("Test cases for Church numerals")
         temple::church1<ITER, BASE>>());
     REQUIRE(metal::same<temple::pow<temple::church2, temple::church2, ITER, BASE>,
         temple::church4<ITER, BASE>>());
-    REQUIRE(metal::same<temple::pow<church100, temple::church2, ITER, BASE>,
-        temple::sqr<church100, ITER, BASE>>());
+    REQUIRE(metal::same<temple::pow<temple::church4, temple::church2, ITER, BASE>,
+        temple::sqr<temple::church4, ITER, BASE>>());
 }
