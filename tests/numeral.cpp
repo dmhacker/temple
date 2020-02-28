@@ -128,3 +128,17 @@ IS_SAME(order<temple::dec<temple::numeral<35>>>,
     order<temple::numeral<34>>);
 IS_SAME(order<temple::dec<temple::numeral<99>>>,
     order<temple::numeral<98>>);
+
+// Test subtraction operation
+IS_SAME(order<temple::sub<temple::numeral<0>, temple::numeral<0>>>,
+    order<temple::numeral<0>>);
+IS_SAME(order<temple::sub<temple::numeral<3>, temple::numeral<4>>>,
+    order<temple::numeral<0>>);
+IS_SAME(order<temple::sub<temple::numeral<4>, temple::numeral<4>>>,
+    order<temple::numeral<0>>);
+IS_SAME(order<temple::sub<temple::numeral<4>, temple::numeral<3>>>,
+    order<temple::numeral<1>>);
+IS_SAME(order<temple::sub<temple::numeral<6>, temple::numeral<3>>>,
+    order<temple::numeral<3>>);
+IS_SAME(order<temple::sub<temple::numeral<100>, temple::numeral<33>>>,
+    order<temple::numeral<67>>);

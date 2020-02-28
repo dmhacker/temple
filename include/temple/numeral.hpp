@@ -31,6 +31,9 @@ namespace detail {
 
     template <class n>
     struct _dec;
+
+    template <class m, class n>
+    struct _sub;
 }
 
 template <class n, class f, class x>
@@ -56,6 +59,9 @@ using pow = typename detail::_pow<n, p>::type;
 
 template <class n>
 using dec = typename detail::_dec<n>::type;
+
+template <class m, class n>
+using sub = typename detail::_sub<m, n>::type;
 
 /*
 template <template <template <class> class, class> class n,
@@ -169,30 +175,21 @@ namespace detail {
         using type = first<n<iter, pair<numeral<0>, numeral<0>>>>;
     };
 
-    /*
-    template <template <template <class> class, class> class n,
-        template <template <class> class, class> class m,
-        template <class> class f, class x>
+    template <class m, class n>
     struct _sub {
-        template <class l>
-        struct _build {
-            using type = pair<church0<f, x>, l>;
-        };
-
-        template <class l>
-        using build = typename _build<l>::type;
-
-        template <class l>
-        struct _iter {
-            using type = pair<f<first<l>>, pop_tail<l>>;
-        };
-
-        template <class l>
-        using iter = typename _iter<l>::type;
-
-        using type = tail<n<iter, m<build, pair<church0<f, x>, marker>>>>;
     };
-    */
+
+    template <template <template <class> class, class> class m,
+        template <template <class> class, class> class n>
+    struct _sub<nbox<m>, nbox<n>> {
+        template <class l>
+        using fill0 = pair<numeral<0>, l>;
+
+        template <class l>
+        using iter = pair<inc<first<l>>, pop_tail<l>>;
+
+        using type = tail<m<iter, n<fill0, pair<numeral<0>, marker>>>>;
+    };
 }
 
 }
