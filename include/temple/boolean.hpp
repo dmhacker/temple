@@ -74,7 +74,7 @@ namespace detail {
     template <template <class, class> class p,
         template <class, class> class q>
     struct _or<bbox<p>, bbox<q>> {
-        using type = p<true_, bbox<p>>;
+        using type = p<true_, bbox<q>>;
     };
 
     template <class p>
