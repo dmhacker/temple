@@ -106,15 +106,15 @@ namespace detail {
         template <template <class> class, class> class n>
     struct _add<nbox<m>, nbox<n>> {
         /* // Alternative approach: */
-        /* template <template <class> class f, class x> */
-        /* using result = m<f, n<f, x>>; */
+        /* template <class accum> */
+        /* using iter = inc<accum>; */
 
-        /* using type = nbox<result>; */
+        /* using type =  m<iter, nbox<n>>; */
 
-        template <class accum>
-        using iter = inc<accum>;
+        template <template <class> class f, class x>
+        using result = m<f, n<f, x>>;
 
-        using type =  m<iter, nbox<n>>;
+        using type = nbox<result>;
     };
 
     template <class m, class n>
