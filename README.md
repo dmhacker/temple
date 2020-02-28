@@ -43,4 +43,5 @@ wrap_vectors<temple::sub<temple::church<10>, temple::church<6>>, char> vec4;
 ```
 
 The implementation can be found in __include/temple/numerals.hpp__. 
-Tests are in the __tests__ directory.
+Tests are in the __tests__ directory. Temple itself has no external dependencies;
+however, its tests use the [metal](https://github.com/brunocodutra/metal) metaprogramming library.
