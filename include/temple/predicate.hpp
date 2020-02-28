@@ -37,7 +37,7 @@ namespace detail {
 
     template <template <template <class> class, class> class n>
     struct _isz<nbox<n>> {
-        template <class cn>
+        template <class b>
         using iter = false_;
 
         using type = n<iter, true_>;
