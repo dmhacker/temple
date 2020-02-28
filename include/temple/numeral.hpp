@@ -105,12 +105,6 @@ namespace detail {
     template <template <template <class> class, class> class m,
         template <template <class> class, class> class n>
     struct _add<nbox<m>, nbox<n>> {
-        /* // Alternative approach: */
-        /* template <class accum> */
-        /* using iter = inc<accum>; */
-
-        /* using type =  m<iter, nbox<n>>; */
-
         template <template <class> class f, class x>
         using result = m<f, n<f, x>>;
 
@@ -162,12 +156,6 @@ namespace detail {
     template <template <template <class> class, class> class m,
         template <template <class> class, class> class n>
     struct _sub<nbox<m>, nbox<n>> {
-        /* // Alternative implementation: */
-        /* template <class accum> */
-        /* using iter = dec<accum>; */
-
-        /* using type = n<iter, nbox<m>>; */
-
         template <class l>
         using fill0 = pair<numeral<0>, l>;
 
