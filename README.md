@@ -24,7 +24,10 @@ Specifically, you can do stuff like:
 template <class t>
 using wrap_vector = std::vector<t>;
 
-temple::churchify<temple::church<4>, temple::fbox<wrap_vector>, char> vec0;
+template <class cn, class base>
+using wrap_vectors = temple::churchify<cn, temple::fbox<wrap_vector>, base>;
+
+wrap_vectors<temple::church<4>, char> vec0;
 // decltype(vec0) == std::vector<std::vector<std::vector<std::vector<char>>>>
 ```
 
@@ -32,11 +35,11 @@ It's also possible to use standard arthimetic operations to combine Church numer
 They're all just types after all :)
 
 ```cpp
-temple::churchify<temple::add<temple::church<1>, temple::church<3>>, temple::fbox<wrap_vector>, char> vec1;
-temple::churchify<temple::mul<temple::church<4>, temple::church<1>>, temple::fbox<wrap_vector>, char> vec2;
-temple::churchify<temple::pow<temple::church<2>, temple::church<2>>, temple::fbox<wrap_vector>, char> vec3;
-temple::churchify<temple::sub<temple::church<10>, temple::church<6>>, temple::fbox<wrap_vector>, char> vec4;
-// decltype(vec1) == decltype(vec2) == decltype(vec3) == decltype(vec4)
+wrap_vectors<temple::add<temple::church<1>, temple::church<3>>, char> vec1;
+wrap_vectors<temple::mul<temple::church<4>, temple::church<1>>, char> vec2;
+wrap_vectors<temple::pow<temple::church<2>, temple::church<2>>, char> vec3;
+wrap_vectors<temple::sub<temple::church<10>, temple::church<6>>, char> vec4;
+// decltype(vec0) == decltype(vec1) == decltype(vec2) == decltype(vec3) == decltype(vec4)
 ```
 
 The implementation can be found in __include/temple/numerals.hpp__. 

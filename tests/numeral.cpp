@@ -15,18 +15,18 @@ template <class t>
 using wrap_vector = std::vector<t>;
 
 template <class cn, class base>
-using vectorize = temple::churchify<cn, temple::fbox<wrap_vector>, base>;
+using wrap_vectors = temple::churchify<cn, temple::fbox<wrap_vector>, base>;
 
 // Basic interpretation of Church numerals works correctly
-IS_SAME(vectorize<temple::church<0>, char>, char);
-IS_SAME(vectorize<temple::church<1>, char>, std::vector<char>);
-IS_SAME(vectorize<temple::church<2>, char>,
+IS_SAME(wrap_vectors<temple::church<0>, char>, char);
+IS_SAME(wrap_vectors<temple::church<1>, char>, std::vector<char>);
+IS_SAME(wrap_vectors<temple::church<2>, char>,
     std::vector<std::vector<char>>);
-IS_SAME(vectorize<temple::church<3>, char>,
+IS_SAME(wrap_vectors<temple::church<3>, char>,
     std::vector<std::vector<std::vector<char>>>);
-IS_SAME(vectorize<temple::church<4>, char>,
+IS_SAME(wrap_vectors<temple::church<4>, char>,
     std::vector<std::vector<std::vector<std::vector<char>>>>);
-IS_SAME(vectorize<temple::church<5>, char>,
+IS_SAME(wrap_vectors<temple::church<5>, char>,
     std::vector<std::vector<std::vector<std::vector<std::vector<char>>>>>);
 
 // Test parity of Church numerals
