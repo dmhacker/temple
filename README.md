@@ -18,8 +18,8 @@ f (f (f (f x)))
 ```
 
 Using only C++11 templates, it's possible to construct and use Church numerals!
-In true Church numeral fashion, all numeric operations are implemented without
-using recursion at all, only taking advantage of the properties of Church numerals.
+Interestingly, all numeric operations are implemented without using explicit recursion - 
+this is accomplished by taking advantage of the properties of Church numerals.
 
 All implementation details can be found in __include/temple__. 
 Tests are in the __tests__ directory. Temple itself has no external dependencies;
