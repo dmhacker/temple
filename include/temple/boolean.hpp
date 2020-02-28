@@ -23,6 +23,9 @@ namespace detail {
 
     template <class p>
     struct _not;
+
+    template <class p, class q>
+    struct _xor;
 }
 
 using true_ = bbox<detail::_true>;
@@ -40,6 +43,9 @@ using or_ = typename detail::_or<p, q>::type;
 
 template <class p>
 using not_ = typename detail::_not<p>::type;
+
+template <class p, class q>
+using xor_ = typename detail::_xor<p, q>::type;
 
 namespace detail {
     template <class p, class a, class b>
@@ -78,6 +84,16 @@ namespace detail {
     template <template <class, class> class p>
     struct _not<bbox<p>> {
         using type = p<false_, true_>;
+    };
+
+    template <class p, class q>
+    struct _xor {
+    };
+
+    template <template <class, class> class p,
+        template <class, class> class q>
+    struct _xor<bbox<p>, bbox<q>> {
+        using type = p<not_<bbox<q>>, bbox<q>>;
     };
 }
 
