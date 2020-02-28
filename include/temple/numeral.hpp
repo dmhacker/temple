@@ -162,13 +162,19 @@ namespace detail {
     template <template <template <class> class, class> class m,
         template <template <class> class, class> class n>
     struct _sub<nbox<m>, nbox<n>> {
-        template <class l>
-        using fill0 = pair<numeral<0>, l>;
+        template <class accum>
+        using iter = dec<accum>;
 
-        template <class l>
-        using iter = pair<inc<first<l>>, pop_tail<l>>;
+        using type = n<iter, nbox<m>>;
 
-        using type = tail<m<iter, n<fill0, pair<numeral<0>, marker>>>>;
+        /* // Alternative implementation: */
+        /* template <class l> */
+        /* using fill0 = pair<numeral<0>, l>; */
+
+        /* template <class l> */
+        /* using iter = pair<inc<first<l>>, pop_tail<l>>; */
+
+        /* using type = tail<m<iter, n<fill0, pair<numeral<0>, marker>>>>; */
     };
 }
 

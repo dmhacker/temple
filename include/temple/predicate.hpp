@@ -28,7 +28,7 @@ template <class m, class n>
 using lt = gt<n, m>;
 
 template <class m, class n>
-using eql = and_<leq<m, n>, leq<n, m>>;
+using eq = and_<leq<m, n>, leq<n, m>>;
 
 namespace detail {
     template <class n>
