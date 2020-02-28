@@ -63,26 +63,6 @@ using dec = typename detail::_dec<n>::type;
 template <class m, class n>
 using sub = typename detail::_sub<m, n>::type;
 
-/*
-template <template <template <class> class, class> class n,
-    template <class> class f, class x>
-using dec = typename detail::_dec<n, f, x>::type;
-
-template <template <template <class> class, class> class n,
-    template <class> class f, class x>
-using sqr = mul<n, n, f, x>;
-
-template <template <template <class> class, class> class n,
-    template <template <class> class, class> class m,
-    template <class> class f, class x>
-using sub = typename detail::_sub<n, m, f, x>::type;
-
-template <template <template <class> class, class> class n,
-    template <template <class> class, class> class p,
-    template <class> class f, class x>
-using pow = typename detail::_pow<n, p, f, x>::type;
-*/
-
 namespace detail {
     template <class n, class f, class x>
     struct _compose {
