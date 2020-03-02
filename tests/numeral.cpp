@@ -142,3 +142,25 @@ IS_SAME(order<temple::sub<temple::numeral<6>, temple::numeral<3>>>,
     order<temple::numeral<3>>);
 IS_SAME(order<temple::sub<temple::numeral<100>, temple::numeral<33>>>,
     order<temple::numeral<67>>);
+
+// Test division operation
+IS_SAME(order<temple::div<temple::numeral<0>, temple::numeral<1>>>,
+    order<temple::numeral<0>>);
+IS_SAME(order<temple::div<temple::numeral<0>, temple::numeral<10>>>,
+    order<temple::numeral<0>>);
+IS_SAME(order<temple::div<temple::numeral<3>, temple::numeral<4>>>,
+    order<temple::numeral<0>>);
+IS_SAME(order<temple::div<temple::numeral<4>, temple::numeral<4>>>,
+    order<temple::numeral<1>>);
+IS_SAME(order<temple::div<temple::numeral<5>, temple::numeral<3>>>,
+    order<temple::numeral<1>>);
+IS_SAME(order<temple::div<temple::numeral<6>, temple::numeral<3>>>,
+    order<temple::numeral<2>>);
+IS_SAME(order<temple::div<temple::numeral<100>, temple::numeral<33>>>,
+    order<temple::numeral<3>>);
+IS_SAME(order<temple::div<temple::numeral<100>, temple::numeral<10>>>,
+    order<temple::numeral<10>>);
+IS_SAME(order<temple::div<temple::numeral<100>, temple::numeral<1>>>,
+    order<temple::numeral<100>>);
+IS_SAME(order<temple::div<temple::numeral<77>, temple::numeral<7>>>,
+    order<temple::numeral<11>>);
