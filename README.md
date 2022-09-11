@@ -1,7 +1,5 @@
 # temple
 
-[![Build Status](https://travis-ci.com/dmhacker/temple.svg?branch=master)](https://travis-ci.com/dmhacker/temple)
-
 ---
 
 church numerals + template metaprogramming = temple
